@@ -1,0 +1,7 @@
+{
+  "name": "Ramkrishna Textile Website",
+  "description": "Premium business website for a textile manufacturing company in Surat.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
