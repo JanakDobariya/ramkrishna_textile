@@ -1,20 +1,18 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Ramkrishna Textile website
 
-# Run and deploy your AI Studio app
+The source for a responsive React and Vite company website. It presents the business story, textile collections, wholesale benefits, contact details, and an ElevenLabs conversational widget.
 
-This contains everything you need to run your app locally.
+## Run locally
 
-View your app in AI Studio: https://ai.studio/apps/drive/10ntJaWHwiu3n3LtDHWpHmU3Os8GmKkJc
+```bash
+pnpm install
+pnpm run dev
+```
 
-## Run Locally
+Create a production build with `pnpm run build`. The site does not need an API key to build or run.
 
-**Prerequisites:**  Node.js
+## Contact form
 
+The form opens the visitor's email application with an inquiry addressed to `info@ramkrishnatextile.com`. It deliberately does not claim a message was sent, because there is no server-side form service in this project.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Before publishing business-information changes, confirm the address, email, claims, and conversational-agent ID with the site owner.

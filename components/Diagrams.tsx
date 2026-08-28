@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle, Clock, Award, Truck, ShieldCheck, Phone, Mail, MapPin, Send } from 'lucide-react';
+import { ArrowRight, Clock, Award, Truck, ShieldCheck, Send } from 'lucide-react';
 
 // --- PRODUCTS SECTION ---
 
@@ -37,9 +37,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ title, description, im
                 <h3 className="font-serif text-2xl text-stone-900 mb-3">{title}</h3>
                 <div className="w-12 h-0.5 bg-textile-gold mb-4"></div>
                 <p className="text-stone-600 mb-6 leading-relaxed">{description}</p>
-                <button className="flex items-center gap-2 text-sm font-bold tracking-widest text-textile-gold uppercase hover:text-stone-900 transition-colors">
+                <a href="#contact" className="flex items-center gap-2 text-sm font-bold tracking-widest text-textile-gold uppercase hover:text-stone-900 transition-colors">
                     Inquire Now <ArrowRight size={16} />
-                </button>
+                </a>
             </div>
         </motion.div>
     );
@@ -80,51 +80,44 @@ export const FeaturesGrid: React.FC = () => {
 // --- CONTACT FORM ---
 
 export const ContactForm: React.FC = () => {
-    const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setStatus('submitting');
-        // Simulate API call
-        setTimeout(() => {
-            setStatus('success');
-        }, 1500);
+        const form = new FormData(e.currentTarget as HTMLFormElement);
+        const subject = `Website inquiry: ${form.get('product')}`;
+        const body = [
+            `Name: ${form.get('name')}`,
+            `Email: ${form.get('email')}`,
+            `Phone: ${form.get('phone') || 'Not provided'}`,
+            '',
+            String(form.get('message')),
+        ].join('\n');
+        window.location.href = `mailto:info@ramkrishnatextile.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     };
 
     return (
         <div className="bg-white p-8 md:p-10 rounded-xl shadow-lg border-t-4 border-textile-gold">
             <h3 className="font-serif text-2xl text-stone-900 mb-6">Send an Inquiry</h3>
             
-            {status === 'success' ? (
-                <div className="flex flex-col items-center justify-center h-64 text-center animate-fade-in-up">
-                    <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
-                        <CheckCircle size={32} />
-                    </div>
-                    <h4 className="text-xl font-bold text-stone-800 mb-2">Message Sent!</h4>
-                    <p className="text-stone-500">Thank you for contacting Ramkrishna Textile. We will get back to you shortly.</p>
-                    <button onClick={() => setStatus('idle')} className="mt-6 text-sm text-textile-gold underline">Send another message</button>
-                </div>
-            ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Full Name</label>
-                            <input required type="text" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all" placeholder="John Doe" />
+                            <input required name="name" type="text" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all" placeholder="Your name" />
                         </div>
                         <div>
                             <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Email Address</label>
-                            <input required type="email" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all" placeholder="john@company.com" />
+                            <input required name="email" type="email" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all" placeholder="you@company.com" />
                         </div>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Phone Number</label>
-                            <input type="tel" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all" placeholder="+91 98765 43210" />
+                            <input name="phone" type="tel" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all" placeholder="Optional" />
                         </div>
                         <div>
                             <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Product Interest</label>
-                            <select className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all">
+                            <select name="product" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all">
                                 <option>Wholesale Sarees</option>
                                 <option>Cotton Fabrics</option>
                                 <option>General Inquiry</option>
@@ -134,24 +127,17 @@ export const ContactForm: React.FC = () => {
 
                     <div>
                         <label className="block text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Message</label>
-                        <textarea required rows={4} className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all" placeholder="Tell us about your requirements..."></textarea>
+                        <textarea required name="message" rows={4} className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-textile-gold/20 focus:border-textile-gold transition-all" placeholder="Tell us about your requirements..."></textarea>
                     </div>
 
                     <button 
                         type="submit" 
-                        disabled={status === 'submitting'}
-                        className="w-full py-4 bg-stone-900 text-white rounded-lg font-bold tracking-widest uppercase hover:bg-stone-800 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 disabled:opacity-70"
+                        className="w-full py-4 bg-stone-900 text-white rounded-lg font-bold tracking-widest uppercase hover:bg-stone-800 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                     >
-                        {status === 'submitting' ? 'Sending...' : 'Send Message'}
-                        {!status && <Send size={18} />}
+                        Open email <Send size={18} />
                     </button>
+                    <p className="text-xs text-stone-500 text-center">This opens your email app with the inquiry filled in. Review it there before sending.</p>
                 </form>
-            )}
         </div>
     );
 };
-
-// --- EMPTY EXPORTS TO SATISFY IMPORTS IF NEEDED ---
-export const SurfaceCodeDiagram = () => null;
-export const TransformerDecoderDiagram = () => null;
-export const PerformanceMetricDiagram = () => null;

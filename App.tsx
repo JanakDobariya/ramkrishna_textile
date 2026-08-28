@@ -6,10 +6,9 @@
 import React, { useState, useEffect } from 'react';
 import { HeroScene } from './components/QuantumScene'; // Now repurposed as Textile Scene
 import { ProductCard, FeaturesGrid, ContactForm } from './components/Diagrams'; // Repurposed business components
-import { Menu, X, ArrowRight, MapPin, Phone, Mail, Instagram, Facebook, Linkedin } from 'lucide-react';
+import { Menu, X, MapPin, Mail } from 'lucide-react';
 
-// Add type declaration for custom element
-declare global {
+declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
       'elevenlabs-convai': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
@@ -219,30 +218,13 @@ const App: React.FC = () => {
 
                             <div className="flex items-start gap-4">
                                 <div className="p-3 bg-stone-800 rounded-lg text-textile-gold">
-                                    <Phone size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="text-white font-bold uppercase tracking-wider text-sm mb-1">Call Us</h4>
-                                    <p className="text-stone-400">+91 98765 43210</p>
-                                    <p className="text-xs text-stone-500 mt-1">Mon-Sat, 9am - 7pm</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start gap-4">
-                                <div className="p-3 bg-stone-800 rounded-lg text-textile-gold">
                                     <Mail size={24} />
                                 </div>
                                 <div>
                                     <h4 className="text-white font-bold uppercase tracking-wider text-sm mb-1">Email Us</h4>
-                                    <p className="text-stone-400">info@ramkrishnatextile.com</p>
+                                    <a className="text-stone-400 hover:text-white" href="mailto:info@ramkrishnatextile.com">info@ramkrishnatextile.com</a>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="flex gap-4 mt-12">
-                             <a href="#" className="p-2 bg-stone-800 rounded-full hover:bg-textile-gold hover:text-white transition-colors"><Instagram size={20} /></a>
-                             <a href="#" className="p-2 bg-stone-800 rounded-full hover:bg-textile-gold hover:text-white transition-colors"><Facebook size={20} /></a>
-                             <a href="#" className="p-2 bg-stone-800 rounded-full hover:bg-textile-gold hover:text-white transition-colors"><Linkedin size={20} /></a>
                         </div>
                     </div>
 
@@ -267,7 +249,6 @@ const App: React.FC = () => {
                     <a href="#about" className="hover:text-white transition-colors">About</a>
                     <a href="#products" className="hover:text-white transition-colors">Products</a>
                     <a href="#contact" className="hover:text-white transition-colors">Contact</a>
-                    <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
                 </div>
             </div>
             <div className="text-center md:text-left mt-8 text-xs opacity-40">
